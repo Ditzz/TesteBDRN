@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faMugSaucer, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faMugSaucer, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Lista = ({ navigation }: any) => {
 
@@ -39,6 +39,10 @@ const Lista = ({ navigation }: any) => {
             alert("Falha ao excluir! " + error)
         }
     }
+
+    const AlterarElemento = (id: any) => {
+        navigation.navigate('Alterar', { id });
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Lista</Text>
@@ -46,12 +50,20 @@ const Lista = ({ navigation }: any) => {
                 {tarefas.map((tarefa) => (
                     <View style={styles.listagem}>
                         <Text key={tarefa.id}>{tarefa.title}</Text>
-                        <TouchableOpacity
-                            onPress={() => ExcluirElemento(tarefa.id)}
-                            style={styles.botaoExcluir}
-                        >
-                            <FontAwesomeIcon style={styles.textoBotao} icon={ faTrash } />
-                        </TouchableOpacity>
+                        <View style={styles.botoes}>
+                            <TouchableOpacity
+                                onPress={() => ExcluirElemento(tarefa.id)}
+                                style={styles.botaoExcluir}
+                            >
+                                <FontAwesomeIcon style={styles.textoBotao} icon={faTrash} />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => AlterarElemento(tarefa.id)}
+                                style={styles.botaoAlterar}
+                            >
+                                <FontAwesomeIcon style={styles.textoBotao} icon={faPencil} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 ))}
             </View>
@@ -69,7 +81,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    listagem:{
+    listagem: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
@@ -86,11 +98,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 5,
     },
+    botaoAlterar: {
+        backgroundColor: '#46F',
+        width: 100,
+        height: 40,
+        alignItems: 'center',
+        marginHorizontal: 30,
+        justifyContent: 'center',
+        borderRadius: 5,
+        marginLeft: 10,
+    },
     textoBotao: {
         color: '#FFF',
         fontWeight: 'bold'
     },
-    header:{
+    botoes:{
+        flexDirection: 'row',
+    },
+    header: {
         fontSize: 30,
         fontWeight: 'bold',
         alignSelf: 'center',

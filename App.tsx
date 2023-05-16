@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Detalhes from './app/screens/Detalhes';
+import Alterar from './app/screens/Alterar';
 import Lista from './app/screens/Lista';
 import Cadastro from './app/screens/Cadastro';
 
@@ -14,7 +14,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Cadastro" component={Cadastro}/>
         <Stack.Screen name="Lista" component={Lista}/>
-        <Stack.Screen name="Detalhes" component={Detalhes}/>
+        <Stack.Screen name="Alterar" component={Alterar}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
