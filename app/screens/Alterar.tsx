@@ -1,48 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
-import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
-import { firestore } from 'react-native-firebase';
+
 
 const Alterar = ({ route }: any) => {
-    const id = route.params?.id;
-    const [title, setTitle] = useState('ghgfhgf');
-    const [done, setDone] = useState('false');
+    const { id } = route.params;
+    const [tarefa, setTarefa] = useState<any>({});
 
+    const fetchTarefa = async () => {
+        const colecao = doc(FIRESTORE_DB, 'Tarefas', id);
+        const colecaoSnapshot = await getDoc(colecao);
+        if (colecaoSnapshot.exists()) {
+            setTarefa({
+                id: colecaoSnapshot.id,
+                ...colecaoSnapshot.data()
+            });
+        }
+
+    }
 
     useEffect(() => {
-        const TarefasRef = collection(FIRESTORE_DB, 'Tarefas');
-
-        const subscriber = onSnapshot(TarefasRef, {
-            next: (snapshot) => {
-                const tarefas: any[] = [];
-                snapshot.docs.forEach(doc => {
-                    if (doc.id === id) {
-                        tarefas.push({
-                            id: doc.id,
-                            ...doc.data(),
-                        })
-                    }
-                })
-                setTitle(tarefas[0].title);
-                setDone(tarefas[0].done);
-            }
-        })
-        return () => subscriber();
+        fetchTarefa();
     }, []);
+
+    const handleAtualizaTexto = (key: string, t: string) => {
+        setTarefa({
+            ...tarefa,
+            [key]: t
+        });
+    }
+
+    const handleUpdateTarefa = async () => {
+        const colecao = doc(FIRESTORE_DB, 'Tarefas', id);
+        await updateDoc(colecao, tarefa);
+    }
+
 
     return (
         <View>
             <View>
                 <TextInput
-                    value={title}
-                    onChangeText={(t) => setTitle(t)}
+                    value={tarefa.title}
+                    onChangeText={(t) => handleAtualizaTexto('title', t)}
                 />
-                <TextInput value={done}
-                    onChangeText={(t) => setDone(t)}
+                <TextInput value={tarefa.done}
+                    onChangeText={(t) => handleAtualizaTexto('done', t)}
                 />
                 <Button
                     title="Alterar"
+                    onPress={handleUpdateTarefa}
                 />
             </View>
         </View>
