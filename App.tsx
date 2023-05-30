@@ -14,7 +14,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="CarouselCards" component={CarouselCards} />
+        <Stack.Screen name="Notícias" component={CarouselCards} />
         <Stack.Screen name="UploadFoto" component={UploadFoto} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="Lista" component={Lista} />
@@ -24,11 +24,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
