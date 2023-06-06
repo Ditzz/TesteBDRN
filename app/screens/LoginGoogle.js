@@ -11,9 +11,9 @@ export default function App() {
   const [userInfo, setUserInfo] = useState(null);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: "393800982525-q9mjjtmmt83f90ph61msu4krab9mq4h6.apps.googleusercontent.com",
-    iosClientId: "393800982525-5i15ch6grut2fnj6sggp27bvocckon4a.apps.googleusercontent.com",
-    webClientId: "393800982525-rnc9gbjj0mvc3taq1iu4aohnd4benqte.apps.googleusercontent.com",
+    androidClientId: "",
+    iosClientId: "",
+    webClientId: "",
   });
 
   useEffect(() => {
@@ -81,10 +81,6 @@ export default function App() {
           {/* <Text style={styles.text}>{JSON.stringify(userInfo, null, 2)}</Text> */}
         </View>
       )}
-      <Button
-        title="remove local store"
-        onPress={async () => await AsyncStorage.removeItem("@user")}
-      />
     </View>
   );
 }
